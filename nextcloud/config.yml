@@ -1,0 +1,41 @@
+<?php
+$CONFIG = array (
+  'datadirectory' => '/data',
+  'instanceid' => 'ocnefzzdmr0z',
+  'passwordsalt' => 'FIfExFqJBCrtNvce4w256xhjV4LEaq',
+  'secret' => 'MUTPat3M8oNSxnSnJeGUrajXCjwFy1/unlJ6QumCBhfEFNhm',
+  'trusted_domains' => 
+  array (
+    0 => '192.168.0.68:10081',
+    1 => 'drive.aroic-studios.co.uk',
+    2 => '192.168.1.68:10081',
+    3 => '100.85.118.55:10081',
+    4 => '31.49.193.245:10081',
+  ),
+  'dbtype' => 'sqlite3',
+  'version' => '28.0.2.5',
+  'overwrite.cli.url' => 'http://192.168.1.68:10081',
+  'dbname' => 'db',
+  'dbhost' => 'localhost',
+  'dbport' => '',
+  'dbtableprefix' => 'oc_',
+  'installed' => true,
+  'memcache.local' => '\\OC\\Memcache\\APCu',
+  'filelocking.enabled' => true,
+  'memcache.locking' => '\\OC\\Memcache\\APCu',
+  'upgrade.disable-web' => true,
+  'mail_from_address' => 'adam',
+  'mail_smtpmode' => 'smtp',
+  'mail_sendmailmode' => 'smtp',
+  'mail_domain' => 'prawnboy.co.za',
+  'mail_smtphost' => 'smtp.prawnboy.co.za',
+  'mail_smtpport' => '465',
+  'mail_smtpauth' => 1,
+  'mail_smtpname' => 'adam@prawnboy.co.za',
+  'mail_smtppassword' => '1886wysiwyG',
+  'app_install_overwrite' => 
+  array (
+    0 => 'files_markdown',
+  ),
+  'maintenance' => false,
+);
