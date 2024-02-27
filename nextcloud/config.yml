@@ -32,7 +32,7 @@ $CONFIG = array (
   'mail_smtpport' => '465',
   'mail_smtpauth' => 1,
   'mail_smtpname' => 'adam@prawnboy.co.za',
-  'mail_smtppassword' => '1886wysiwyG',
+  'mail_smtppassword' => '',
   'app_install_overwrite' => 
   array (
     0 => 'files_markdown',
