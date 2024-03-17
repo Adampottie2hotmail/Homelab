@@ -1,0 +1,20 @@
+blueprint:
+  name: Zone Leave Notifications
+  description: |
+    # Philips HUE Smart Button - Multi-press Controller v0.2
+  domain: automation
+  alias: "Notification: Adam Left Home"
+description: ""
+trigger:
+  - platform: zone
+    entity_id: person.adam
+    zone: zone.home
+    event: leave
+condition: []
+action:
+  - service: notify.mobile_app_fayes_iphone
+    metadata: {}
+    data:
+      title: Adam Left Home
+      message: Adam Left 3 Heathfield Gate
+mode: single
