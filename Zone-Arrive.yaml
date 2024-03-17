@@ -1,7 +1,7 @@
 blueprint:
   name: Arrive Zone Notifications
   description: |
-    # Philips HUE Smart Button - Multi-press Controller v0.2
+    # Zone Arriving Notifications
   domain: automation
 alias: "Notification: Adam Arrived Home"
 description: ""
@@ -15,5 +15,5 @@ action:
   - service: notify.mobile_app_fayes_iphone
     data:
       title: Adam Arrived Home
-      message: Adam Has Arrived at 3 Heathfield Gate
+      message: Adam Has Arrived at Home
 mode: single
