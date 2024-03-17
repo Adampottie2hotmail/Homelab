@@ -1,6 +1,7 @@
 blueprint:
-  name: ZHA - Ecodim, 4 Channel remote
-  description: 'Control any light using the Ecodim remote on ZHA'
+  name: Zone Notifications
+  description: |
+    # Philips HUE Smart Button - Multi-press Controller v0.2
   domain: automation
 alias: "Notification: Adam Arrived Home"
 description: ""
