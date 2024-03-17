@@ -2,7 +2,6 @@ blueprint:
   name: ZHA - Ecodim, 4 Channel remote
   description: 'Control any light using the Ecodim remote on ZHA'
   domain: automation
-  input:
 alias: "Notification: Adam Arrived Home"
 description: ""
 trigger:
