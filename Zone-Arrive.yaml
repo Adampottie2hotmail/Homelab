@@ -1,1 +1,20 @@
-alias:%20%22Notification%3A%20Adam%20Arrived%20Home%22%0Adescription%3A%20%22%22%0Atrigger%3A%0A%20%20-%20platform%3A%20zone%0A%20%20%20%20entity_id%3A%20person.adam%0A%20%20%20%20zone%3A%20zone.home%0A%20%20%20%20event%3A%20enter%0Acondition%3A%20%5B%5D%0Aaction%3A%0A%20%20-%20service%3A%20notify.mobile_app_fayes_iphone%0A%20%20%20%20data%3A%0A%20%20%20%20%20%20title%3A%20Adam%20Arrived%20Home%0A%20%20%20%20%20%20message%3A%20Adam%20Has%20Arrived%20at%203%20Heathfield%20Gate%0Amode%3A%20single%0A
+# Blueprint metadata
+blueprint:
+  name: HUE Smart Button (Multi-press)
+  description: |
+    # Philips HUE Smart Button - Multi-press Controller v0.2
+
+alias: "Notification: Adam Arrived Home"
+description: ""
+trigger:
+  - platform: zone
+    entity_id: person.adam
+    zone: zone.home
+    event: enter
+condition: []
+action:
+  - service: notify.mobile_app_fayes_iphone
+    data:
+      title: Adam Arrived Home
+      message: Adam Has Arrived at 3 Heathfield Gate
+mode: single
