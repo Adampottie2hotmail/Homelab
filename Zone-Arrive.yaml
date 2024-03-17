@@ -1,5 +1,5 @@
 blueprint:
-  name: Zone Notifications
+  name: Leave Zone Notifications
   description: |
     # Philips HUE Smart Button - Multi-press Controller v0.2
   domain: automation
