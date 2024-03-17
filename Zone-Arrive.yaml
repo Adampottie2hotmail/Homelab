@@ -3,7 +3,7 @@ blueprint:
   name: HUE Smart Button (Multi-press)
   description: |
     # Philips HUE Smart Button - Multi-press Controller v0.2
-
+domain: automation
 alias: "Notification: Adam Arrived Home"
 description: ""
 trigger:
