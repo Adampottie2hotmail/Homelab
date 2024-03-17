@@ -1,7 +1,7 @@
 blueprint:
   name: Zone Leave Notifications
   description: |
-    # Philips HUE Smart Button - Multi-press Controller v0.2
+    #  Zone Leaving Notifications V1.2
   domain: automation
 alias: "Notification: Adam Left Home"
 description: ""
@@ -16,5 +16,5 @@ action:
     metadata: {}
     data:
       title: Adam Left Home
-      message: Adam Left 3 Heathfield Gate
+      message: Adam Left Home
 mode: single
