@@ -1,0 +1,319 @@
+blueprint:
+  name: ZHA - Ecodim, 4 Channel remote
+  description: 'Control any light using the Ecodim remote on ZHA'
+  domain: automation
+  input:
+    remote:
+      name: Remote controller
+      description: Remote to use
+      selector:
+        device:
+          integration: zha
+          manufacturer: EcoDim
+          model: ED-10014
+    light_1:
+      name: Light row 1
+      description: The lights that will be controlled with row 1
+      selector:
+        target:
+          entity:
+            domain: light
+    light_2:
+      name: Light row 2
+      description: The lights that will be controlled with row 2
+      selector:
+        target:
+          entity:
+            domain: light
+    light_3:
+      name: Light row 3
+      description: The lights that will be controlled with row 3
+      selector:
+        target:
+          entity:
+            domain: light
+    light_4:
+      name: Light row 4
+      description: The lights that will be controlled with row 4
+      selector:
+        target:
+          entity:
+            domain: light
+    step_size:
+      name: Step Size
+      description: The % step each dimming step takes
+      default: 10
+      selector:
+        number:
+          min: 5
+          max: 25
+          unit_of_measurement: '%'
+    step_delay:
+      name: Step Delay
+      description: The time between dimming steps (ms)
+      default: 1000
+      selector:
+        number:
+          min: 100
+          max: 2000
+          unit_of_measurement: 'milliseconds'
+  source_url: https://gist.github.com/ronaldt80/85b9119a8f36bfca19a7011a12a9d2da
+mode: restart
+max_exceeded: silent
+trigger:
+- platform: event
+  event_type: zha_event
+  event_data:
+    device_id: !input 'remote'
+action:
+- variables:
+    command: '{{ trigger.event.data.command }}'
+    cluster_id: '{{ trigger.event.data.cluster_id }}'
+    endpoint_id: '{{ trigger.event.data.endpoint_id }}'
+    args: '{{ trigger.event.data.args }}'
+    step_size: !input 'step_size'
+- choose:
+  - conditions:
+    - "{{ command == 'on' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 1 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_1'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'off' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 1 }}"
+    sequence:
+    - service: light.turn_off
+      target: !input 'light_1'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 1 }}"
+    - "{{ args == [0, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_1'
+          data:
+            transition: 1
+            brightness_step_pct: !input 'step_size'
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 1 }}"
+    - "{{args == [1, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_1'
+          data:
+            transition: 1
+            brightness_step_pct: "{{ step_size * -1 }}"
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'stop' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 1 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_1'
+  - conditions:
+    - "{{ command == 'on' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 2 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_2'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'off' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 2 }}"
+    sequence:
+    - service: light.turn_off
+      target: !input 'light_2'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 2 }}"
+    - "{{ args == [0, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_2'
+          data:
+            transition: 1
+            brightness_step_pct: !input 'step_size'
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 2 }}"
+    - "{{args == [1, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_2'
+          data:
+            transition: 1
+            brightness_step_pct: "{{ step_size * -1 }}"
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'stop' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 2 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_2'
+  - conditions:
+    - "{{ command == 'on' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 3 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_3'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'off' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 3 }}"
+    sequence:
+    - service: light.turn_off
+      target: !input 'light_3'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 3 }}"
+    - "{{ args == [0, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_3'
+          data:
+            transition: 1
+            brightness_step_pct: !input 'step_size'
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 3 }}"
+    - "{{args == [1, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_3'
+          data:
+            transition: 1
+            brightness_step_pct: "{{ step_size * -1 }}"
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'stop' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 3 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_3'
+  - conditions:
+    - "{{ command == 'on' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 4 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_4'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'off' }}"
+    - "{{ cluster_id == 6 }}"
+    - "{{ endpoint_id == 4 }}"
+    sequence:
+    - service: light.turn_off
+      target: !input 'light_4'
+      data:
+        transition: 1
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 4 }}"
+    - "{{ args == [0, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_4'
+          data:
+            transition: 1
+            brightness_step_pct: !input 'step_size'
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'move_with_on_off' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 4 }}"
+    - "{{args == [1, 50]}}"
+    sequence:
+      repeat:
+        while:
+        - condition: template
+          value_template: "{{ repeat.index < (100 / step_size)|int  }}"
+        sequence:
+        - service: light.turn_on
+          target: !input 'light_4'
+          data:
+            transition: 1
+            brightness_step_pct: "{{ step_size * -1 }}"
+        - delay:
+            milliseconds: !input 'step_delay'
+  - conditions:
+    - "{{ command == 'stop' }}"
+    - "{{ cluster_id == 8 }}"
+    - "{{ endpoint_id == 4 }}"
+    sequence:
+    - service: light.turn_on
+      target: !input 'light_4'
